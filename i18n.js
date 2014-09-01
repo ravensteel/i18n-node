@@ -62,6 +62,11 @@ i18n.configure = function i18nConfigure(opt) {
       read(l);
     });
   }
+
+  //watch for locales change
+  fs.watch(directory, function (event, filename) {
+    locales = {};
+  });
 };
 
 i18n.init = function i18nInit(request, response, next) {
