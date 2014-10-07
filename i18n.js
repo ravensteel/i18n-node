@@ -57,17 +57,21 @@ i18n.configure = function i18nConfigure(opt) {
   objectNotation = (typeof opt.objectNotation === 'boolean') ? opt.objectNotation : false;
 
   // implicitly read all locales
-  if (typeof opt.locales === 'object') {
-    opt.locales.forEach(function (l) {
-      read(l);
-    });
-  }
+  readLocales(opt.locales);
 
   //watch for locales change
   fs.watch(directory, function (event, filename) {
-    locales = {};
+    readLocales(opt.locales);
   });
 };
+
+function readLocales(optLocales){
+  if (typeof optLocales === 'object') {
+    optLocales.forEach(function (l) {
+      read(l);
+    });
+  }
+}
 
 i18n.init = function i18nInit(request, response, next) {
   if (typeof request === 'object') {
